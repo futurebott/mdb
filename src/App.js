@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
+import React from "react";
+import { useApi } from "./api/Search";
+import { searchRepos } from "./api/api";
+
+const App = () => {
+  const query = { query: "" };
+  const processTitles = data => {
+    var movieSlim = [];
+    data.results.forEach(element => {
+      movieSlim.push({Title:element.original_title, id:element.id})
+    });
+    return movieSlim;
+  };
+  const [isLoading, data, error] = useApi(searchRepos, query, processTitles);
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  const repos = error ? [] : data;
+  // callback function
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <p>Discover API</p>
+      {error && <div>{error}</div>}
+
+      {repos.results.map(repo => (
+        <div
+          key={`repo-${repo.id}`}
+          style={{ marginTop: 20, borderTop: "1px solid #e3e3e3" }}>
+          <p>
+            Title: {repo.original_title} 
+            <br />
+          </p>
+        </div>
+      ))}
     </div>
   );
-}
+};
 
 export default App;
