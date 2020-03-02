@@ -1,37 +1,29 @@
-import React from "react";
-import { useApi } from "./api/Search";
-import { searchRepos, processTitles } from "./api/api";
+import React, { useState } from "react";
+import {CardList} from './component/CardList';
+import {Button,InputLabel,Input  ,FormControl } from '@material-ui/core/'
+
 
 const App = () => {
-  const [isLoading, data, error] = useApi(searchRepos, processTitles);
-  if (isLoading) {
-    return <div>Loading...</div>;
+  const [searchText, setSearch] = useState("");
+  let intialTyping = "";
+  const handleChanghe = (e) => {
+    intialTyping = e.target.value
+    
   }
-  const repos = error ? [] : data;
-  // callback function
+  const handleSubmit = (e) =>{
+    e.preventDefault();
+    setSearch(intialTyping);
+  }
   return (
     <div>
-      <p>Discover API</p>
-      {error && <div>{error}</div>}
-
-      {repos.results
-        .filter(function(rep) {
-          if (rep == null) {
-            return false; // skip
-          }
-          return true;
-        })
-        .map(repo => (
-          <div
-            key={`repo-${repo.id}`}
-            style={{ marginTop: 20, borderTop: "1px solid #e3e3e3" }}
-          >
-            <p>
-              Title: {repo.original_title}
-              <br />
-            </p>
-          </div>
-        ))}
+     
+      <FormControl>
+      <InputLabel>Search Box</InputLabel>
+      <Input id="someIt" onChange={handleChanghe}></Input>
+      <Button type="submit" text="Button"  onClick={handleSubmit}  variant="light"> click</Button>
+      </FormControl>
+      <CardList search={searchText}/>
+      
     </div>
   );
 };
