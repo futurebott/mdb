@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {CardList} from './component/CardList';
+import {CardList} from './component/CardList.jsx';
 import {Button,InputLabel,Input  ,FormControl } from '@material-ui/core/'
 
 
@@ -8,7 +8,15 @@ const App = () => {
   let intialTyping = "";
   const handleChanghe = (e) => {
     intialTyping = e.target.value
-    
+   
+  }
+  const handleKeyPress = (e) => {
+    if(e.key === "Enter")
+    {
+    e.preventDefault();
+    setSearch(intialTyping);
+    }
+   
   }
   const handleSubmit = (e) =>{
     e.preventDefault();
@@ -19,8 +27,8 @@ const App = () => {
      
       <FormControl>
       <InputLabel>Search Box</InputLabel>
-      <Input id="someIt" onChange={handleChanghe}></Input>
-      <Button type="submit" text="Button"  onClick={handleSubmit}  variant="light"> click</Button>
+      <Input id="someIt" onKeyPress={handleKeyPress} onChange={handleChanghe}></Input>
+      <Button type="submit"  onClick={handleSubmit}> click</Button>
       </FormControl>
       <CardList search={searchText}/>
       

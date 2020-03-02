@@ -1,6 +1,7 @@
 import React from "react";
 import { useApi } from "../api/Search";
 import { searchRepos, processTitles } from "../api/api";
+import Card from './Card.jsx';
 export const CardList = (props) => {
     const [isLoading, data, error] = useApi(searchRepos, processTitles, props.search);
   if (isLoading) {
@@ -20,15 +21,9 @@ export const CardList = (props) => {
           return true;
         })
         .map(repo => (
-          <div
-            key={`repo-${repo.id}`}
-            style={{ marginTop: 20}}
-          >
-            <p>
-              {repo.original_title}
-              <br />
-            </p>
-          </div>
+         <Card key={repo.id} cardVal = {repo}>
+
+         </Card>
         ))}
     </div>
   );
