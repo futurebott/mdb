@@ -22,7 +22,7 @@ steps:
 - task: AzureWebAppContainer@1
   inputs:
     azureSubscription: 'Visual Studio Enterprise – MPN(e87d1787-2884-4951-9620-c51424c83bee)'
-    appName: 'MDB'
+    appName: 'ASP-MDB-8266'
     deployToSlotOrASE: true
     resourceGroupName: 'MDB'
     slotName: 'production'
