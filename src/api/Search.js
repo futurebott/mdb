@@ -1,5 +1,6 @@
 //https://api.themoviedb.org/3/discover/movie?sort_by=popularity.des&api_key=81f61c79f3be940431af3e81d040e13e
 import { useState, useEffect } from "react";
+import {SaveData} from './SaveData';
 export const useApi = (apiFunction, callback, query) => {
   const [data, setData] = useState({results:[]});
   const [isLoading, setIsLoading] = useState(true);
@@ -15,6 +16,7 @@ export const useApi = (apiFunction, callback, query) => {
     apiFunction(query)
       .then(({ data }) => {
         setData(data);
+        SaveData(apiFunction.name+"_"+query, data);
         setIsLoading(false);
         if (callback) {
           callback(data);
